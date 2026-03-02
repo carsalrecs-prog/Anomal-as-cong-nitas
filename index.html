@@ -49,44 +49,53 @@
             useEffect(() => {
                 if (spanRef.current) {
                     spanRef.current.innerHTML = '';
-                    const iconNode = lucide.icons[name];
+                    let iconNode = lucide.icons[name];
+                    
+                    // Fallbacks para asegurar la compatibilidad
+                    if (!iconNode && name === 'CircleHelp') iconNode = lucide.icons['HelpCircle'];
+                    if (!iconNode && name === 'CircleCheckBig') iconNode = lucide.icons['CheckCircle2'];
+                    if (!iconNode && name === 'CircleX') iconNode = lucide.icons['XCircle'];
+
                     if (iconNode) {
                         const svg = lucide.createElement(iconNode);
                         svg.setAttribute('width', size);
                         svg.setAttribute('height', size);
                         if (className) svg.setAttribute('class', className);
                         spanRef.current.appendChild(svg);
+                    } else {
+                        // Icono de error visible si no se encuentra
+                        spanRef.current.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${className}"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><line x1="9" x2="15" y1="9" y2="15"></line><line x1="15" x2="9" y1="9" y2="15"></line></svg>`;
                     }
                 }
             }, [name, size, className]);
             return <span ref={spanRef} className="inline-flex items-center justify-center shrink-0"></span>;
         };
 
-        // Mapeo de iconos
-        const Activity = (p) => <LucideIcon name="activity" {...p} />;
-        const Baby = (p) => <LucideIcon name="baby" {...p} />;
-        const Stethoscope = (p) => <LucideIcon name="stethoscope" {...p} />;
-        const Microscope = (p) => <LucideIcon name="microscope" {...p} />;
-        const BookOpen = (p) => <LucideIcon name="book-open" {...p} />;
-        const Calculator = (p) => <LucideIcon name="calculator" {...p} />;
-        const ShieldAlert = (p) => <LucideIcon name="shield-alert" {...p} />;
-        const Calendar = (p) => <LucideIcon name="calendar" {...p} />;
-        const Dna = (p) => <LucideIcon name="dna" {...p} />;
-        const Syringe = (p) => <LucideIcon name="syringe" {...p} />;
-        const FileText = (p) => <LucideIcon name="file-text" {...p} />;
-        const Menu = (p) => <LucideIcon name="menu" {...p} />;
-        const X = (p) => <LucideIcon name="x" {...p} />;
-        const HelpCircle = (p) => <LucideIcon name="help-circle" {...p} />;
-        const CheckCircle2 = (p) => <LucideIcon name="check-circle-2" {...p} />;
-        const XCircle = (p) => <LucideIcon name="x-circle" {...p} />;
-        const HeartPulse = (p) => <LucideIcon name="heart-pulse" {...p} />;
-        const Brain = (p) => <LucideIcon name="brain" {...p} />;
-        const Bone = (p) => <LucideIcon name="bone" {...p} />;
-        const ArrowRight = (p) => <LucideIcon name="arrow-right" {...p} />;
-        const ImageIcon = (p) => <LucideIcon name="image" {...p} />;
-        const PenTool = (p) => <LucideIcon name="pen-tool" {...p} />;
-        const Sparkles = (p) => <LucideIcon name="sparkles" {...p} />;
-        const ChevronRight = (p) => <LucideIcon name="chevron-right" {...p} />;
+        // Mapeo de iconos corregido (Debe ser estricto en mayúsculas para que el navegador los lea)
+        const Activity = (p) => <LucideIcon name="Activity" {...p} />;
+        const Baby = (p) => <LucideIcon name="Baby" {...p} />;
+        const Stethoscope = (p) => <LucideIcon name="Stethoscope" {...p} />;
+        const Microscope = (p) => <LucideIcon name="Microscope" {...p} />;
+        const BookOpen = (p) => <LucideIcon name="BookOpen" {...p} />;
+        const Calculator = (p) => <LucideIcon name="Calculator" {...p} />;
+        const ShieldAlert = (p) => <LucideIcon name="ShieldAlert" {...p} />;
+        const Calendar = (p) => <LucideIcon name="Calendar" {...p} />;
+        const Dna = (p) => <LucideIcon name="Dna" {...p} />;
+        const Syringe = (p) => <LucideIcon name="Syringe" {...p} />;
+        const FileText = (p) => <LucideIcon name="FileText" {...p} />;
+        const Menu = (p) => <LucideIcon name="Menu" {...p} />;
+        const X = (p) => <LucideIcon name="X" {...p} />;
+        const HelpCircle = (p) => <LucideIcon name="CircleHelp" {...p} />;
+        const CheckCircle2 = (p) => <LucideIcon name="CircleCheckBig" {...p} />;
+        const XCircle = (p) => <LucideIcon name="CircleX" {...p} />;
+        const HeartPulse = (p) => <LucideIcon name="HeartPulse" {...p} />;
+        const Brain = (p) => <LucideIcon name="Brain" {...p} />;
+        const Bone = (p) => <LucideIcon name="Bone" {...p} />;
+        const ArrowRight = (p) => <LucideIcon name="ArrowRight" {...p} />;
+        const ImageIcon = (p) => <LucideIcon name="Image" {...p} />;
+        const PenTool = (p) => <LucideIcon name="PenTool" {...p} />;
+        const Sparkles = (p) => <LucideIcon name="Sparkles" {...p} />;
+        const ChevronRight = (p) => <LucideIcon name="ChevronRight" {...p} />;
 
         // --- CÓDIGO DE LA APLICACIÓN ---
 
@@ -114,19 +123,25 @@
           return (
             <div className="flex flex-col md:flex-row h-[100dvh] bg-slate-50 font-sans text-slate-800 overflow-hidden">
               
-              {/* Mobile Header */}
+              {/* Mobile Header Ajustado */}
               <header className="md:hidden bg-slate-950 text-white p-4 flex justify-between items-center z-50 shadow-md shrink-0 sticky top-0 border-b border-slate-800">
                 <div className="flex items-center gap-3">
-                  <div className="bg-indigo-500/20 p-2 rounded-xl">
-                     <Baby className="text-indigo-400" size={24} />
+                  <div className="bg-indigo-500/20 p-2 rounded-xl flex items-center justify-center">
+                     {/* SVG puro para garantizar que nunca desaparezca */}
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-400"><path d="M9 12h.01"/><path d="M15 12h.01"/><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 1.5-2 1.5c-2 0-3.5 1.1-3.5 2.5 0 1.3 1.2 2.5 2.8 2.5"/></svg>
                   </div>
                   <h1 className="text-xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent truncate">GenoClínica</h1>
                 </div>
                 <button 
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-                  className="p-2 bg-slate-800/80 rounded-xl text-slate-100 hover:bg-slate-700 transition-all focus:ring-2 focus:ring-indigo-500 shrink-0"
+                  className="p-2 bg-slate-800/80 rounded-xl text-slate-100 hover:bg-slate-700 transition-all focus:ring-2 focus:ring-indigo-500 shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
+                  aria-label="Abrir Menú"
                 >
-                  {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                  {isMobileMenuOpen ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                  )}
                 </button>
               </header>
 
