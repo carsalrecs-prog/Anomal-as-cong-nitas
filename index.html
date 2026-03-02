@@ -23,8 +23,9 @@
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Animaciones suaves globales */
+        /* Animaciones suaves globales y balanceo de texto */
         * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        p, h1, h2, h3, h4, span { text-wrap: pretty; }
         
         /* Patrón de puntos para el fondo */
         .bg-dots {
@@ -58,7 +59,7 @@
                     }
                 }
             }, [name, size, className]);
-            return <span ref={spanRef} className="inline-flex items-center justify-center"></span>;
+            return <span ref={spanRef} className="inline-flex items-center justify-center shrink-0"></span>;
         };
 
         // Mapeo de iconos
@@ -111,19 +112,19 @@
           };
 
           return (
-            <div className="flex flex-col md:flex-row h-screen bg-slate-50 font-sans text-slate-800 overflow-hidden">
+            <div className="flex flex-col md:flex-row h-[100dvh] bg-slate-50 font-sans text-slate-800 overflow-hidden">
               
               {/* Mobile Header */}
-              <header className="md:hidden bg-slate-950 text-white p-4 flex justify-between items-center z-30 shadow-md shrink-0 sticky top-0 border-b border-slate-800">
+              <header className="md:hidden bg-slate-950 text-white p-4 flex justify-between items-center z-50 shadow-md shrink-0 sticky top-0 border-b border-slate-800">
                 <div className="flex items-center gap-3">
                   <div className="bg-indigo-500/20 p-2 rounded-xl">
                      <Baby className="text-indigo-400" size={24} />
                   </div>
-                  <h1 className="text-xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">GenoClínica</h1>
+                  <h1 className="text-xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent truncate">GenoClínica</h1>
                 </div>
                 <button 
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-                  className="p-2 bg-slate-800/80 rounded-xl text-slate-100 hover:bg-slate-700 transition-all focus:ring-2 focus:ring-indigo-500"
+                  className="p-2 bg-slate-800/80 rounded-xl text-slate-100 hover:bg-slate-700 transition-all focus:ring-2 focus:ring-indigo-500 shrink-0"
                 >
                   {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
@@ -132,18 +133,18 @@
               {/* Navigation Sidebar */}
               <nav className={`
                 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} 
-                md:translate-x-0 absolute md:relative top-[73px] md:top-0 w-full md:w-80 h-[calc(100vh-73px)] md:h-full 
-                bg-[#0B1121] text-slate-100 flex-col shadow-2xl z-40 transition-transform duration-400 ease-in-out shrink-0 border-r border-slate-800/50
+                md:translate-x-0 absolute md:relative top-[73px] md:top-0 w-full md:w-80 h-[calc(100dvh-73px)] md:h-[100dvh] 
+                bg-[#0B1121] text-slate-100 flex flex-col shadow-2xl z-40 transition-transform duration-400 ease-in-out shrink-0 border-r border-slate-800/50
               `}>
-                <div className="hidden md:flex flex-col p-8 border-b border-slate-800/80 bg-gradient-to-b from-slate-900 to-[#0B1121] relative overflow-hidden">
+                <div className="hidden md:flex flex-col p-8 border-b border-slate-800/80 bg-gradient-to-b from-slate-900 to-[#0B1121] relative overflow-hidden shrink-0">
                   {/* Decoración sutil superior */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                   
                   <div className="flex items-center gap-3 z-10">
-                    <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-2.5 rounded-2xl shadow-lg shadow-indigo-500/20">
+                    <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-2.5 rounded-2xl shadow-lg shadow-indigo-500/20 shrink-0">
                        <Baby className="text-white" size={28} /> 
                     </div>
-                    <h1 className="text-3xl font-extrabold tracking-tight text-white">GenoClínica</h1>
+                    <h1 className="text-3xl font-extrabold tracking-tight text-white break-words">GenoClínica</h1>
                   </div>
                   <p className="text-xs text-indigo-300/80 mt-3 tracking-widest uppercase font-bold z-10 flex items-center gap-1">
                     <Microscope size={12} /> Medicina Integrada
@@ -167,15 +168,15 @@
                   <NavItem icon={<HelpCircle size={20}/>} label="Casos Clínicos (Quiz)" active={activeTab === 'casos'} onClick={() => handleTabChange('casos')} />
                 </div>
                 
-                {/* Pie de página de creador Mejorado */}
-                <div className="p-5 border-t border-slate-800/80 bg-slate-900/50 backdrop-blur-xl">
+                {/* Pie de página de creador - AHORA SIEMPRE VISIBLE */}
+                <div className="p-5 border-t border-slate-800/80 bg-slate-900/50 backdrop-blur-xl shrink-0 z-50">
                   <div className="bg-gradient-to-b from-slate-800 to-slate-800/40 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 border border-slate-700/50 shadow-inner group transition-all duration-500 hover:shadow-indigo-500/10 hover:border-indigo-500/30 cursor-default relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/5 to-purple-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
                     
-                    <span className="text-[10px] text-slate-400 uppercase tracking-widest flex items-center gap-1.5 font-bold z-10">
-                      Creado con <HeartPulse size={14} className="text-rose-500 animate-pulse drop-shadow-[0_0_8px_rgba(244,63,94,0.6)]" /> por
+                    <span className="text-[10px] text-slate-400 uppercase tracking-widest flex items-center gap-1.5 font-bold z-10 break-words text-center">
+                      Creado con <HeartPulse size={14} className="text-rose-500 animate-pulse drop-shadow-[0_0_8px_rgba(244,63,94,0.6)] shrink-0" /> por
                     </span>
-                    <span className="text-base font-black bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 bg-clip-text text-transparent transform transition-all duration-300 group-hover:scale-105 drop-shadow-sm z-10">
+                    <span className="text-base font-black bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 bg-clip-text text-transparent transform transition-all duration-300 group-hover:scale-105 drop-shadow-sm z-10 text-center break-words">
                       Richard Carbajal
                     </span>
                   </div>
@@ -183,13 +184,13 @@
               </nav>
 
               {/* Main Content Area con fondo decorativo premium */}
-              <main className="flex-1 overflow-y-auto relative w-full bg-[#F8FAFC]">
+              <main className="flex-1 overflow-y-auto overflow-x-hidden relative w-full bg-[#F8FAFC]">
                 {/* Decoraciones de fondo absoluto */}
                 <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-indigo-100/50 via-slate-50/50 to-transparent -z-10 pointer-events-none"></div>
                 <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-300/10 rounded-full blur-[100px] -z-10 pointer-events-none translate-x-1/3 -translate-y-1/4"></div>
                 <div className="absolute bottom-0 left-0 w-full h-full bg-dots opacity-30 -z-10 pointer-events-none"></div>
 
-                <div className="max-w-6xl mx-auto p-4 sm:p-6 md:p-10 pb-16 relative z-10">
+                <div className="max-w-6xl mx-auto p-4 sm:p-6 md:p-10 pb-20 relative z-10 w-full">
                   {renderContent()}
                 </div>
               </main>
@@ -199,23 +200,23 @@
 
         function Inicio() {
           return (
-            <div className="space-y-8 animate-in fade-in duration-700 slide-in-from-bottom-8">
+            <div className="space-y-8 animate-in fade-in duration-700 slide-in-from-bottom-8 w-full">
               {/* Hero Section Premium */}
-              <div className="bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-500 rounded-[2rem] p-8 sm:p-10 md:p-14 text-white shadow-[0_20px_50px_rgba(79,70,229,0.3)] relative overflow-hidden group">
+              <div className="bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-500 rounded-[2rem] p-8 sm:p-10 md:p-14 text-white shadow-[0_20px_50px_rgba(79,70,229,0.3)] relative overflow-hidden group w-full">
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
                 <div className="absolute -top-24 -right-24 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-1000"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-300 opacity-20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
                 
-                <div className="relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-xs font-bold uppercase tracking-widest mb-6">
-                    <Sparkles size={14} className="text-amber-300" />
+                <div className="relative z-10 w-full">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-xs font-bold uppercase tracking-widest mb-6 break-words text-center">
+                    <Sparkles size={14} className="text-amber-300 shrink-0" />
                     Módulo de Especialidad
                   </div>
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-[1.1] tracking-tight">
+                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-[1.1] tracking-tight break-words">
                     Malformaciones <br/>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-100 drop-shadow-sm">Congénitas</span>
                   </h2>
-                  <p className="text-indigo-100 text-lg md:text-xl max-w-2xl leading-relaxed font-medium backdrop-blur-sm">
+                  <p className="text-indigo-100 text-lg md:text-xl max-w-2xl leading-relaxed font-medium backdrop-blur-sm break-words">
                     Descifrando el desarrollo: De la morfogénesis básica celular al manejo multidisciplinario quirúrgico avanzado.
                   </p>
                 </div>
@@ -223,7 +224,7 @@
               </div>
 
               {/* Cards de Información */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                 <InfoCard title="Epidemiología Global" icon={<Activity className="text-rose-500" size={28}/>} color="rose">
                   Afectan al <strong className="text-rose-600 font-black">3-6%</strong> de los nacidos vivos. Son una de las principales causas de morbimortalidad infantil global (Datos ECLAMC) y demandan alta inversión en salud pública.
                 </InfoCard>
@@ -236,15 +237,15 @@
               </div>
 
               {/* Glosario Glassmorphism */}
-              <div className="bg-white/70 backdrop-blur-xl p-8 md:p-10 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-white mt-6 relative overflow-hidden">
+              <div className="bg-white/70 backdrop-blur-xl p-8 md:p-10 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-white mt-6 relative overflow-hidden w-full">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-100 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-8 text-slate-800 flex items-center gap-3 relative z-10">
-                  <div className="p-3 bg-indigo-100 text-indigo-600 rounded-xl">
+                <h3 className="text-2xl md:text-3xl font-extrabold mb-8 text-slate-800 flex items-center gap-3 relative z-10 break-words">
+                  <div className="p-3 bg-indigo-100 text-indigo-600 rounded-xl shrink-0">
                     <FileText size={24} /> 
                   </div>
                   Glosario de Dismorfología
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10 items-stretch">
                   <DefItem term="Malformación" type="Primaria" color="indigo" def="Defecto estructural primario. El tejido se formó anormalmente desde el inicio celular (ej. Labio leporino, Espina Bífida)." />
                   <DefItem term="Deformación" type="Secundaria" color="amber" def="Alteración de la forma por fuerzas mecánicas sobre un tejido que ya era normal (ej. Pie zambo por oligohidramnios severo)." />
                   <DefItem term="Disrupción" type="Destructiva" color="rose" def="Destrucción de un tejido previamente normal, a menudo por isquemia o bridas (ej. Síndrome de banda amniótica amputando un miembro)." />
@@ -257,16 +258,16 @@
 
         function Fisiopatologia() {
           return (
-            <div className="space-y-8 animate-in slide-in-from-bottom-8 duration-700 fade-in">
-              <div className="mb-2">
+            <div className="space-y-8 animate-in slide-in-from-bottom-8 duration-700 fade-in w-full">
+              <div className="mb-2 w-full break-words">
                 <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Etiología y Fisiopatología</h2>
                 <p className="text-slate-500 mt-2 text-base md:text-lg font-medium">Comprendiendo las bases embriológicas y los agentes teratógenos.</p>
               </div>
               
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
                 <div className="bg-white/80 backdrop-blur-xl p-8 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-white">
-                  <h3 className="text-xl font-bold mb-8 flex items-center gap-3 text-slate-800">
-                    <div className="p-2.5 bg-purple-100 text-purple-600 rounded-xl"><Dna size={24}/></div> 
+                  <h3 className="text-xl font-bold mb-8 flex items-center gap-3 text-slate-800 break-words">
+                    <div className="p-2.5 bg-purple-100 text-purple-600 rounded-xl shrink-0"><Dna size={24}/></div> 
                     Genética vs Ambiente
                   </h3>
                   <div className="space-y-8">
@@ -277,32 +278,32 @@
                 </div>
 
                 <div className="bg-white/80 backdrop-blur-xl p-8 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-white">
-                  <h3 className="text-xl font-bold mb-8 flex items-center gap-3 text-slate-800">
-                    <div className="p-2.5 bg-orange-100 text-orange-600 rounded-xl"><ShieldAlert size={24}/></div>
+                  <h3 className="text-xl font-bold mb-8 flex items-center gap-3 text-slate-800 break-words">
+                    <div className="p-2.5 bg-orange-100 text-orange-600 rounded-xl shrink-0"><ShieldAlert size={24}/></div>
                     Teratógenos Clásicos
                   </h3>
                   <div className="space-y-5">
-                    <div className="group p-5 bg-gradient-to-r from-orange-50 to-transparent rounded-2xl border border-orange-100 hover:border-orange-300 transition-colors">
-                      <h4 className="text-sm font-bold text-orange-800 uppercase mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-500"></div> Infecciosos (TORCH + Zika)</h4>
+                    <div className="group p-5 bg-gradient-to-r from-orange-50 to-transparent rounded-2xl border border-orange-100 hover:border-orange-300 transition-colors w-full break-words">
+                      <h4 className="text-sm font-bold text-orange-800 uppercase mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-500 shrink-0"></div> Infecciosos (TORCH + Zika)</h4>
                       <p className="text-sm text-slate-600 pl-3.5">Citomegalovirus (Microcefalia, calcificaciones), Rubeola (Cardiopatías, cataratas, sordera), Zika (Microcefalia severa).</p>
                     </div>
-                    <div className="group p-5 bg-gradient-to-r from-red-50 to-transparent rounded-2xl border border-red-100 hover:border-red-300 transition-colors">
-                      <h4 className="text-sm font-bold text-red-800 uppercase mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-red-500"></div> Fármacos y Drogas</h4>
+                    <div className="group p-5 bg-gradient-to-r from-red-50 to-transparent rounded-2xl border border-red-100 hover:border-red-300 transition-colors w-full break-words">
+                      <h4 className="text-sm font-bold text-red-800 uppercase mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></div> Fármacos y Drogas</h4>
                       <p className="text-sm text-slate-600 pl-3.5">Ácido Valproico (Defectos tubo neural), Talidomida (Focomelia), Alcohol (Facies característica, SAF).</p>
                     </div>
-                    <div className="group p-5 bg-gradient-to-r from-blue-50 to-transparent rounded-2xl border border-blue-100 hover:border-blue-300 transition-colors">
-                      <h4 className="text-sm font-bold text-blue-800 uppercase mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Metabolismo Materno</h4>
+                    <div className="group p-5 bg-gradient-to-r from-blue-50 to-transparent rounded-2xl border border-blue-100 hover:border-blue-300 transition-colors w-full break-words">
+                      <h4 className="text-sm font-bold text-blue-800 uppercase mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></div> Metabolismo Materno</h4>
                       <p className="text-sm text-slate-600 pl-3.5">Diabetes Pregestacional mal controlada (Síndrome de regresión caudal, hipertrofia septal cardiaca asimétrica).</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-amber-200/50 via-yellow-100/50 to-amber-50 p-6 md:p-8 rounded-[2rem] border border-amber-200/50 shadow-lg shadow-amber-500/5 flex items-start sm:items-center gap-6">
-                <div className="bg-white p-4 rounded-2xl shadow-sm shrink-0">
+              <div className="bg-gradient-to-r from-amber-200/50 via-yellow-100/50 to-amber-50 p-6 md:p-8 rounded-[2rem] border border-amber-200/50 shadow-lg shadow-amber-500/5 flex flex-col sm:flex-row sm:items-center gap-6 w-full break-words">
+                <div className="bg-white p-4 rounded-2xl shadow-sm shrink-0 self-start sm:self-center">
                    <Calendar className="text-amber-500" size={32} />
                 </div>
-                <div>
+                <div className="flex-1">
                   <h3 className="text-amber-900 text-lg font-bold mb-2">Períodos Críticos (Perla Embriológica)</h3>
                   <p className="text-amber-900/80 text-base leading-relaxed">
                     La vulnerabilidad máxima a la dismorfogénesis ocurre durante el <strong className="bg-amber-200/50 px-1 rounded">período embrionario (semanas 3 a 8)</strong>. Durante esta ventana, las células están en rápida diferenciación. Una exposición teratogénica aquí causa defectos anatómicos mayores.
@@ -315,22 +316,22 @@
 
         function Diagnostico() {
           return (
-            <div className="space-y-8 animate-in slide-in-from-bottom-8 duration-700 fade-in">
-              <div className="mb-6">
+            <div className="space-y-8 animate-in slide-in-from-bottom-8 duration-700 fade-in w-full">
+              <div className="mb-6 w-full break-words">
                 <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Línea de Tiempo Diagnóstica</h2>
                 <p className="text-slate-500 mt-2 text-base md:text-lg font-medium">Del cribado prenatal no invasivo a la evaluación neonatal.</p>
               </div>
               
-              <div className="relative max-w-4xl mx-auto">
+              <div className="relative max-w-4xl mx-auto w-full">
                 {/* Línea central brillante */}
                 <div className="absolute left-8 md:left-1/2 top-8 bottom-8 w-1.5 bg-gradient-to-b from-indigo-400 via-purple-400 to-rose-400 rounded-full md:-translate-x-1/2 shadow-[0_0_15px_rgba(99,102,241,0.4)]"></div>
                 
-                <div className="space-y-12 relative z-10">
+                <div className="space-y-12 relative z-10 w-full">
                   {/* Etapa 1 */}
                   <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12 w-full">
                     <div className="md:w-1/2 flex justify-start md:justify-end pl-20 md:pl-0 w-full">
-                      <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl shadow-indigo-500/10 border border-white w-full max-w-sm hover:-translate-y-1 transition-transform duration-300">
-                        <h3 className="text-xl font-black text-indigo-700 mb-4 flex items-center gap-2"><Activity size={20}/> Semanas 11 - 14</h3>
+                      <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl shadow-indigo-500/10 border border-white w-full max-w-sm hover:-translate-y-1 transition-transform duration-300 break-words">
+                        <h3 className="text-xl font-black text-indigo-700 mb-4 flex items-center gap-2"><Activity size={20} className="shrink-0"/> Semanas 11 - 14</h3>
                         <div className="space-y-3">
                           <p className="text-sm text-slate-600"><strong className="text-slate-800">Ecografía Marcadora:</strong> Translucencia Nucal, Hueso Nasal, flujo del Ductus Venoso.</p>
                           <div className="h-px w-full bg-slate-100"></div>
@@ -338,7 +339,7 @@
                         </div>
                       </div>
                     </div>
-                    <div className="absolute left-8 md:left-1/2 w-14 h-14 bg-white rounded-full border-4 border-indigo-500 flex items-center justify-center font-black text-indigo-600 shadow-[0_0_20px_rgba(99,102,241,0.3)] md:-translate-x-1/2 -translate-x-1/2 z-20">
+                    <div className="absolute left-8 md:left-1/2 w-14 h-14 bg-white rounded-full border-4 border-indigo-500 flex items-center justify-center font-black text-indigo-600 shadow-[0_0_20px_rgba(99,102,241,0.3)] md:-translate-x-1/2 -translate-x-1/2 z-20 shrink-0">
                       1T
                     </div>
                     <div className="md:w-1/2 hidden md:block"></div>
@@ -347,12 +348,12 @@
                   {/* Etapa 2 */}
                   <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12 w-full">
                     <div className="md:w-1/2 hidden md:block"></div>
-                    <div className="absolute left-8 md:left-1/2 w-14 h-14 bg-white rounded-full border-4 border-purple-500 flex items-center justify-center font-black text-purple-600 shadow-[0_0_20px_rgba(168,85,247,0.3)] md:-translate-x-1/2 -translate-x-1/2 z-20">
+                    <div className="absolute left-8 md:left-1/2 w-14 h-14 bg-white rounded-full border-4 border-purple-500 flex items-center justify-center font-black text-purple-600 shadow-[0_0_20px_rgba(168,85,247,0.3)] md:-translate-x-1/2 -translate-x-1/2 z-20 shrink-0">
                       2T
                     </div>
                     <div className="md:w-1/2 flex justify-start pl-20 md:pl-0 w-full">
-                      <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl shadow-purple-500/10 border border-white w-full max-w-sm hover:-translate-y-1 transition-transform duration-300">
-                        <h3 className="text-xl font-black text-purple-700 mb-4 flex items-center gap-2"><Syringe size={20}/> Semanas 15 - 22</h3>
+                      <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl shadow-purple-500/10 border border-white w-full max-w-sm hover:-translate-y-1 transition-transform duration-300 break-words">
+                        <h3 className="text-xl font-black text-purple-700 mb-4 flex items-center gap-2"><Syringe size={20} className="shrink-0"/> Semanas 15 - 22</h3>
                         <div className="space-y-3">
                           <p className="text-sm text-slate-600"><strong className="text-slate-800">Amniocentesis:</strong> Estudio directo de ADN (Exoma, Microarrays). Diagnóstico definitivo.</p>
                           <div className="h-px w-full bg-slate-100"></div>
@@ -365,14 +366,14 @@
                   {/* Etapa 3 */}
                   <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12 w-full">
                     <div className="md:w-1/2 flex justify-start md:justify-end pl-20 md:pl-0 w-full">
-                      <div className="bg-gradient-to-br from-rose-50 to-white p-6 rounded-2xl shadow-xl shadow-rose-500/10 border border-rose-100 w-full max-w-sm hover:-translate-y-1 transition-transform duration-300">
-                        <h3 className="text-xl font-black text-rose-700 mb-3 flex items-center gap-2"><Baby size={20}/> Nacimiento</h3>
+                      <div className="bg-gradient-to-br from-rose-50 to-white p-6 rounded-2xl shadow-xl shadow-rose-500/10 border border-rose-100 w-full max-w-sm hover:-translate-y-1 transition-transform duration-300 break-words">
+                        <h3 className="text-xl font-black text-rose-700 mb-3 flex items-center gap-2"><Baby size={20} className="shrink-0"/> Nacimiento</h3>
                         <p className="text-sm text-slate-700 leading-relaxed font-medium">
                           <strong className="text-rose-800 bg-rose-200/50 px-1 rounded">Regla Dismorfológica:</strong> La presencia de 3 o más anomalías menores (ej. clinodactilia + pliegue simiesco) aumenta al 90% la probabilidad de una anomalía mayor oculta.
                         </p>
                       </div>
                     </div>
-                    <div className="absolute left-8 md:left-1/2 w-14 h-14 bg-white rounded-full border-4 border-rose-500 flex items-center justify-center text-rose-600 shadow-[0_0_20px_rgba(244,63,94,0.3)] md:-translate-x-1/2 -translate-x-1/2 z-20">
+                    <div className="absolute left-8 md:left-1/2 w-14 h-14 bg-white rounded-full border-4 border-rose-500 flex items-center justify-center text-rose-600 shadow-[0_0_20px_rgba(244,63,94,0.3)] md:-translate-x-1/2 -translate-x-1/2 z-20 shrink-0">
                       <Baby size={24} strokeWidth={2.5}/>
                     </div>
                     <div className="md:w-1/2 hidden md:block"></div>
@@ -508,8 +509,8 @@
             <div className="w-full h-full relative flex flex-col items-center justify-center bg-slate-50/50 rounded-2xl overflow-hidden group">
               {imgStatus === 'error' ? (
                 <>
-                  <div className="absolute top-4 right-4 bg-amber-100/90 backdrop-blur-sm text-amber-800 text-[10px] font-bold px-3 py-1.5 rounded-lg border border-amber-200 z-20 flex items-center gap-1.5 shadow-sm">
-                    <ShieldAlert size={14} /> Esquema (Red Segura)
+                  <div className="absolute top-4 right-4 bg-amber-100/90 backdrop-blur-sm text-amber-800 text-[10px] font-bold px-3 py-1.5 rounded-lg border border-amber-200 z-20 flex items-center gap-1.5 shadow-sm break-words">
+                    <ShieldAlert size={14} className="shrink-0" /> Esquema (Red Segura)
                   </div>
                   <MedicalIllustration id={id} />
                 </>
@@ -518,7 +519,7 @@
                   {imgStatus === 'loading' && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-50/80 backdrop-blur-sm z-10">
                       <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
-                      <span className="text-xs text-slate-500 font-bold tracking-widest uppercase">Cargando visualizador...</span>
+                      <span className="text-xs text-slate-500 font-bold tracking-widest uppercase text-center break-words px-4">Cargando visualizador...</span>
                     </div>
                   )}
                   <a href={src} target="_blank" rel="noreferrer" className="w-full h-full flex items-center justify-center cursor-zoom-in p-4" title="Clic para ampliar original">
@@ -594,9 +595,9 @@
               icon: <Dna size={28} />,
               color: "emerald",
               imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/21_trisomy_-_Down_syndrome.png/250px-21_trisomy_-_Down_syndrome.png",
-              basic: "O 95% é por non disxunción meiótica materna. O risco aumenta coa idade materna (>35 anos).",
-              clinical: "Hipotonia, fisuras palpebrais oblicuas, macroglosia, prego palmar transverso. O 50% teñen cardiopatías (Canle AV común é típico).",
-              treatment: "Manexo sintomático e intervención temperá. Ecocardiograma obrigatorio ao nacer. Avaliación tiroidea anual."
+              basic: "El 95% es por no disyunción meiótica materna. El riesgo aumenta exponencialmente con la edad materna (>35 años).",
+              clinical: "Hipotonía, fisuras palpebrales oblicuas, macroglosia, pliegue palmar transverso. El 50% tienen cardiopatías (Canal AV común es típico).",
+              treatment: "Manejo sintomático e intervención temprana. Ecocardiograma obligatorio al nacer. Evaluación tiroidea anual."
             },
             {
               id: "hernia",
@@ -627,20 +628,20 @@
           };
 
           return (
-            <div className="space-y-6 md:space-y-8 animate-in fade-in duration-700 slide-in-from-bottom-8 flex flex-col min-h-full">
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4">
+            <div className="space-y-6 md:space-y-8 animate-in fade-in duration-700 slide-in-from-bottom-8 flex flex-col min-h-full w-full">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4 w-full break-words">
                 <div>
                   <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Atlas de Patologías</h2>
                   <p className="text-slate-500 mt-2 text-base font-medium">Correlación Básico-Clínica interactiva.</p>
                 </div>
                 
                 {/* Filtros Estilizados */}
-                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide max-w-full">
                   {['Todas', 'Cardiovascular', 'Neurológico', 'Musculoesquelético'].map(sys => (
                      <button 
                       key={sys}
                       onClick={() => setFilter(sys)}
-                      className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-300 ${
+                      className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-300 shrink-0 ${
                         filter === sys 
                           ? 'bg-slate-800 text-white shadow-lg scale-105' 
                           : 'bg-white text-slate-500 hover:bg-slate-200 border border-slate-200'
@@ -652,7 +653,7 @@
                 </div>
               </div>
               
-              <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 flex-1">
+              <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 flex-1 w-full">
                 {/* Lista Seleccionable Premium */}
                 <div className="lg:w-1/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 content-start">
                   {filteredPathologies.map((path, idx) => {
@@ -664,7 +665,7 @@
                       <button
                         key={idx}
                         onClick={() => setSelectedPathology(originalIndex)}
-                        className={`w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all duration-300 border-2 relative overflow-hidden group ${
+                        className={`w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all duration-300 border-2 relative overflow-hidden group break-words ${
                           isActive 
                             ? `bg-white border-transparent shadow-xl ring-4 ${theme.active} scale-[1.02]` 
                             : 'bg-white/60 border-slate-200/60 hover:bg-white hover:border-slate-300 hover:shadow-md'
@@ -686,16 +687,16 @@
                 </div>
                 
                 {/* Panel de Detalles Premium */}
-                <div className="lg:w-2/3">
-                  <div className="bg-white/90 backdrop-blur-2xl p-6 md:p-8 rounded-[2rem] shadow-2xl shadow-slate-200/50 border border-white h-full animate-in slide-in-from-right-8 duration-500 relative overflow-hidden flex flex-col">
+                <div className="lg:w-2/3 w-full">
+                  <div className="bg-white/90 backdrop-blur-2xl p-6 md:p-8 rounded-[2rem] shadow-2xl shadow-slate-200/50 border border-white h-full animate-in slide-in-from-right-8 duration-500 relative overflow-hidden flex flex-col w-full break-words">
                     
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 relative z-10">
-                      <div className="flex items-center gap-4">
-                        <div className={`p-4 rounded-2xl shadow-inner ${getColorTheme(activePath.color).bg} ${getColorTheme(activePath.color).text}`}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 relative z-10 w-full">
+                      <div className="flex items-center gap-4 w-full">
+                        <div className={`p-4 rounded-2xl shadow-inner shrink-0 ${getColorTheme(activePath.color).bg} ${getColorTheme(activePath.color).text}`}>
                           {activePath.icon}
                         </div>
-                        <div>
-                          <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                        <div className="flex-1 min-w-0 break-words">
+                          <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight text-wrap">
                             {activePath.title}
                           </h3>
                           <span className="text-xs font-black uppercase tracking-widest text-slate-400 mt-1 block">{activePath.system}</span>
@@ -703,18 +704,18 @@
                       </div>
 
                       {/* Toggle Premium */}
-                      <div className="bg-slate-100/80 p-1.5 rounded-xl inline-flex shadow-inner self-start sm:self-auto border border-slate-200/50">
+                      <div className="bg-slate-100/80 p-1.5 rounded-xl inline-flex shadow-inner self-start sm:self-auto border border-slate-200/50 shrink-0">
                          <button 
                            onClick={() => setImageMode('esquema')} 
                            className={`px-4 py-2 text-xs font-bold rounded-lg flex items-center gap-2 transition-all duration-300 ${imageMode === 'esquema' ? 'bg-white shadow-md text-indigo-600 scale-105' : 'text-slate-500 hover:text-slate-700'}`}
                          >
-                           <PenTool size={16} /> Esquema
+                           <PenTool size={16} className="shrink-0" /> <span className="hidden sm:inline">Esquema</span><span className="sm:hidden">Esq.</span>
                          </button>
                          <button 
                            onClick={() => setImageMode('foto')} 
                            className={`px-4 py-2 text-xs font-bold rounded-lg flex items-center gap-2 transition-all duration-300 ${imageMode === 'foto' ? 'bg-white shadow-md text-indigo-600 scale-105' : 'text-slate-500 hover:text-slate-700'}`}
                          >
-                           <ImageIcon size={16} /> Clínica
+                           <ImageIcon size={16} className="shrink-0" /> Clínica
                          </button>
                        </div>
                     </div>
@@ -725,26 +726,26 @@
                     </div>
                     
                     {/* Contenido de Texto */}
-                    <div className="space-y-4 relative z-10 flex-1">
-                      <div className="group">
+                    <div className="space-y-4 relative z-10 flex-1 w-full">
+                      <div className="group w-full break-words">
                         <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
-                          <Microscope size={14} className="text-indigo-400"/> Ciencias Básicas (Embriología)
+                          <Microscope size={14} className="text-indigo-400 shrink-0"/> Ciencias Básicas (Embriología)
                         </h4>
-                        <p className="text-sm md:text-base text-slate-700 leading-relaxed bg-slate-50/80 p-4 rounded-2xl border border-slate-100 group-hover:bg-indigo-50/50 group-hover:border-indigo-100 transition-colors">{activePath.basic}</p>
+                        <p className="text-sm md:text-base text-slate-700 leading-relaxed bg-slate-50/80 p-4 rounded-2xl border border-slate-100 group-hover:bg-indigo-50/50 group-hover:border-indigo-100 transition-colors text-pretty">{activePath.basic}</p>
                       </div>
                       
-                      <div className="group">
+                      <div className="group w-full break-words">
                         <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
-                          <Stethoscope size={14} className="text-teal-400"/> Diagnóstico y Clínica
+                          <Stethoscope size={14} className="text-teal-400 shrink-0"/> Diagnóstico y Clínica
                         </h4>
-                        <p className="text-sm md:text-base text-slate-700 leading-relaxed bg-slate-50/80 p-4 rounded-2xl border border-slate-100 group-hover:bg-teal-50/50 group-hover:border-teal-100 transition-colors">{activePath.clinical}</p>
+                        <p className="text-sm md:text-base text-slate-700 leading-relaxed bg-slate-50/80 p-4 rounded-2xl border border-slate-100 group-hover:bg-teal-50/50 group-hover:border-teal-100 transition-colors text-pretty">{activePath.clinical}</p>
                       </div>
                       
-                      <div className="group">
+                      <div className="group w-full break-words">
                         <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
-                          <Activity size={14} className="text-rose-400"/> Manejo y Tratamiento
+                          <Activity size={14} className="text-rose-400 shrink-0"/> Manejo y Tratamiento
                         </h4>
-                        <p className="text-sm md:text-base text-slate-700 leading-relaxed bg-slate-50/80 p-4 rounded-2xl border border-slate-100 group-hover:bg-rose-50/50 group-hover:border-rose-100 transition-colors">{activePath.treatment}</p>
+                        <p className="text-sm md:text-base text-slate-700 leading-relaxed bg-slate-50/80 p-4 rounded-2xl border border-slate-100 group-hover:bg-rose-50/50 group-hover:border-rose-100 transition-colors text-pretty">{activePath.treatment}</p>
                       </div>
                     </div>
                   </div>
@@ -758,22 +759,22 @@
           const [activeSim, setActiveSim] = useState('silverman');
 
           return (
-            <div className="space-y-8 animate-in slide-in-from-bottom-8 duration-700 fade-in">
-              <div className="mb-4">
+            <div className="space-y-8 animate-in slide-in-from-bottom-8 duration-700 fade-in w-full">
+              <div className="mb-4 w-full break-words">
                 <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
-                  <Calculator className="text-indigo-600"/> Simuladores Clínicos
+                  <Calculator className="text-indigo-600 shrink-0"/> Simuladores Clínicos
                 </h2>
                 <p className="text-slate-500 mt-2 text-base md:text-lg font-medium">Herramientas interactivas para la toma de decisiones.</p>
               </div>
 
-              <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
+              <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide max-w-full -mx-4 px-4 md:mx-0 md:px-0">
                 <button onClick={()=>setActiveSim('silverman')} className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 whitespace-nowrap shrink-0 border-2 ${activeSim==='silverman' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-500/30 -translate-y-1' : 'bg-white text-slate-600 hover:bg-slate-50 border-slate-200'}`}>Silverman-Andersen</button>
                 <button onClick={()=>setActiveSim('apgar')} className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 whitespace-nowrap shrink-0 border-2 ${activeSim==='apgar' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-500/30 -translate-y-1' : 'bg-white text-slate-600 hover:bg-slate-50 border-slate-200'}`}>Test de APGAR</button>
                 <button onClick={()=>setActiveSim('ddc')} className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 whitespace-nowrap shrink-0 border-2 ${activeSim==='ddc' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-500/30 -translate-y-1' : 'bg-white text-slate-600 hover:bg-slate-50 border-slate-200'}`}>Riesgo DDC</button>
                 <button onClick={()=>setActiveSim('acido')} className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 whitespace-nowrap shrink-0 border-2 ${activeSim==='acido' ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-500/30 -translate-y-1' : 'bg-white text-slate-600 hover:bg-slate-50 border-slate-200'}`}>Dosis Ácido Fólico</button>
               </div>
 
-              <div className="bg-white/90 backdrop-blur-xl p-6 md:p-10 rounded-[2rem] shadow-2xl shadow-slate-200/50 border border-white">
+              <div className="bg-white/90 backdrop-blur-xl p-6 md:p-10 rounded-[2rem] shadow-2xl shadow-slate-200/50 border border-white w-full">
                 {activeSim === 'silverman' && <SimuladorSilverman />}
                 {activeSim === 'ddc' && <SimuladorDDC />}
                 {activeSim === 'apgar' && <SimuladorAPGAR />}
@@ -804,13 +805,13 @@
           const labels = ["Disociación Tóraco-Abdominal", "Retracción Xifoidea", "Tiraje Intercostal", "Aleteo Nasal", "Quejido Espiratorio"];
 
           return (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              <div className="space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full break-words">
+              <div className="space-y-4 w-full">
                 {Object.keys(options).map((key, idx) => (
-                  <div key={key} className="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/60 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-200 transition-all">
-                    <p className="font-bold text-sm text-slate-700 mb-2">{labels[idx]}</p>
+                  <div key={key} className="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/60 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-200 transition-all w-full">
+                    <p className="font-bold text-sm text-slate-700 mb-2 truncate">{labels[idx]}</p>
                     <select 
-                      className="w-full p-2.5 text-sm rounded-xl border border-slate-300 bg-white outline-none focus:ring-0 cursor-pointer"
+                      className="w-full p-2.5 text-sm rounded-xl border border-slate-300 bg-white outline-none focus:ring-0 cursor-pointer break-words"
                       value={scores[key]}
                       onChange={(e) => setScores({...scores, [key]: parseInt(e.target.value)})}
                     >
@@ -819,11 +820,11 @@
                   </div>
                 ))}
               </div>
-              <div className={`flex flex-col justify-center items-center p-10 bg-gradient-to-br ${res.bg} rounded-[2rem] border border-white/10 text-white shadow-2xl relative overflow-hidden`}>
+              <div className={`flex flex-col justify-center items-center p-10 bg-gradient-to-br ${res.bg} rounded-[2rem] border border-white/10 text-white shadow-2xl relative overflow-hidden w-full`}>
                 <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
-                <p className="text-slate-400 font-bold text-xs tracking-widest uppercase mb-4 z-10">Puntuación Silverman</p>
-                <div className={`text-8xl md:text-9xl font-black mb-6 leading-none ${res.color} drop-shadow-lg z-10`}>{totalScore}</div>
-                <div className={`px-6 py-2.5 rounded-full font-bold text-base bg-white/10 backdrop-blur-md border border-white/20 ${res.color} text-center z-10`}>
+                <p className="text-slate-400 font-bold text-xs tracking-widest uppercase mb-4 z-10 text-center">Puntuación Silverman</p>
+                <div className={`text-8xl md:text-9xl font-black mb-6 leading-none ${res.color} drop-shadow-lg z-10 text-center`}>{totalScore}</div>
+                <div className={`px-6 py-2.5 rounded-full font-bold text-base bg-white/10 backdrop-blur-md border border-white/20 ${res.color} text-center z-10 max-w-full break-words`}>
                   {res.label}
                 </div>
               </div>
@@ -849,13 +850,13 @@
           };
 
           return (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              <div className="space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full break-words">
+              <div className="space-y-4 w-full">
                 {Object.keys(options).map((key, idx) => (
-                  <div key={key} className="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/60 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-200 transition-all">
-                    <p className="font-bold text-sm text-slate-700 mb-2">{['Apariencia (Color)', 'Pulso (Frec. Cardiaca)', 'Gesticulación (Reflejos)', 'Actividad (Tono)', 'Respiración (Esfuerzo)'][idx]}</p>
+                  <div key={key} className="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/60 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-200 transition-all w-full">
+                    <p className="font-bold text-sm text-slate-700 mb-2 truncate">{['Apariencia (Color)', 'Pulso (Frec. Cardiaca)', 'Gesticulación (Reflejos)', 'Actividad (Tono)', 'Respiración (Esfuerzo)'][idx]}</p>
                     <select 
-                      className="w-full p-2.5 text-sm rounded-xl border border-slate-300 bg-white outline-none focus:ring-0 cursor-pointer"
+                      className="w-full p-2.5 text-sm rounded-xl border border-slate-300 bg-white outline-none focus:ring-0 cursor-pointer break-words"
                       value={scores[key]}
                       onChange={(e) => setScores({...scores, [key]: parseInt(e.target.value)})}
                     >
@@ -864,11 +865,11 @@
                   </div>
                 ))}
               </div>
-              <div className={`flex flex-col justify-center items-center p-10 bg-gradient-to-br ${res.bg} rounded-[2rem] border border-white/10 text-white shadow-2xl relative overflow-hidden`}>
+              <div className={`flex flex-col justify-center items-center p-10 bg-gradient-to-br ${res.bg} rounded-[2rem] border border-white/10 text-white shadow-2xl relative overflow-hidden w-full`}>
                 <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
-                <p className="text-slate-400 font-bold text-xs tracking-widest uppercase mb-4 z-10">Puntuación APGAR</p>
-                <div className={`text-8xl md:text-9xl font-black mb-6 leading-none ${res.color} drop-shadow-lg z-10`}>{totalScore}</div>
-                <div className={`px-6 py-2.5 rounded-full font-bold text-base bg-white/10 backdrop-blur-md border border-white/20 ${res.color} text-center z-10`}>
+                <p className="text-slate-400 font-bold text-xs tracking-widest uppercase mb-4 z-10 text-center">Puntuación APGAR</p>
+                <div className={`text-8xl md:text-9xl font-black mb-6 leading-none ${res.color} drop-shadow-lg z-10 text-center`}>{totalScore}</div>
+                <div className={`px-6 py-2.5 rounded-full font-bold text-base bg-white/10 backdrop-blur-md border border-white/20 ${res.color} text-center z-10 max-w-full break-words`}>
                   {res.label}
                 </div>
               </div>
@@ -888,32 +889,32 @@
           const toggle = (k) => setFactors({...factors, [k]: !factors[k]});
 
           return (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              <div className="space-y-3">
-                <p className="text-sm font-bold text-slate-500 mb-4 uppercase tracking-widest">Factores al nacimiento:</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full break-words">
+              <div className="space-y-3 w-full">
+                <p className="text-sm font-bold text-slate-500 mb-4 uppercase tracking-widest text-center lg:text-left">Factores al nacimiento:</p>
                 {[
                   { id: 'female', label: 'Sexo Femenino', desc: 'Mayor laxitud ligamentaria por estrógenos.' },
                   { id: 'breech', label: 'Presentación Podálica', desc: 'Alta compresión mecánica intrauterina.' },
                   { id: 'family', label: 'Historia Familiar', desc: 'Antecedentes directos de DDC.' },
                   { id: 'oligo', label: 'Oligohidramnios', desc: 'Asociado a deformaciones por moldeo.' }
                 ].map(f => (
-                  <div key={f.id} onClick={()=>toggle(f.id)} className={`cursor-pointer border-2 p-4 rounded-2xl flex items-center gap-4 transition-all duration-300 ${factors[f.id] ? 'border-indigo-500 bg-indigo-50 shadow-md transform scale-[1.02]' : 'border-slate-200 bg-slate-50 hover:bg-white hover:border-slate-300'}`}>
+                  <div key={f.id} onClick={()=>toggle(f.id)} className={`cursor-pointer border-2 p-4 rounded-2xl flex items-center gap-4 transition-all duration-300 w-full break-words ${factors[f.id] ? 'border-indigo-500 bg-indigo-50 shadow-md transform scale-[1.02]' : 'border-slate-200 bg-slate-50 hover:bg-white hover:border-slate-300'}`}>
                     <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 shrink-0 transition-colors ${factors[f.id] ? 'border-indigo-600 bg-indigo-600' : 'border-slate-300 bg-white'}`}>
-                      {factors[f.id] && <div className="w-2.5 h-2.5 bg-white rounded-full"></div>}
+                      {factors[f.id] && <div className="w-2.5 h-2.5 bg-white rounded-full shrink-0"></div>}
                     </div>
-                    <div className="flex-1">
-                      <p className={`font-bold text-base leading-tight mb-1 ${factors[f.id] ? 'text-indigo-900' : 'text-slate-700'}`}>{f.label}</p>
-                      <p className="text-xs text-slate-500">{f.desc}</p>
+                    <div className="flex-1 min-w-0">
+                      <p className={`font-bold text-base leading-tight mb-1 text-wrap ${factors[f.id] ? 'text-indigo-900' : 'text-slate-700'}`}>{f.label}</p>
+                      <p className="text-xs text-slate-500 text-pretty">{f.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className={`flex flex-col justify-center p-10 bg-gradient-to-br ${rec.bg} rounded-[2rem] border border-white/10 text-white shadow-2xl relative overflow-hidden`}>
+              <div className={`flex flex-col justify-center p-10 bg-gradient-to-br ${rec.bg} rounded-[2rem] border border-white/10 text-white shadow-2xl relative overflow-hidden w-full break-words`}>
                 <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
-                <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 z-10">Directriz Clínica</h4>
+                <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 z-10 text-center lg:text-left">Directriz Clínica</h4>
                 <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden mb-6 z-10"><div className={`h-full ${rec.c} transition-all duration-700 ease-out`} style={{width: `${Math.min(100, (score/4)*100)}%`}}></div></div>
-                <h3 className={`text-4xl font-black mb-4 ${rec.t} leading-tight z-10`}>{rec.l}</h3>
-                <p className="text-slate-200 text-lg z-10">{rec.d}</p>
+                <h3 className={`text-4xl font-black mb-4 ${rec.t} leading-tight z-10 text-center lg:text-left text-wrap`}>{rec.l}</h3>
+                <p className="text-slate-200 text-lg z-10 text-center lg:text-left text-pretty">{rec.d}</p>
               </div>
             </div>
           );
@@ -925,36 +926,36 @@
           const toggle = (k) => setFactors({...factors, [k]: !factors[k]});
 
           return (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              <div className="space-y-3">
-                <p className="text-sm font-bold text-slate-500 mb-4 uppercase tracking-widest">Riesgos Maternos:</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full break-words">
+              <div className="space-y-3 w-full">
+                <p className="text-sm font-bold text-slate-500 mb-4 uppercase tracking-widest text-center lg:text-left">Riesgos Maternos:</p>
                 {[
                   { id: 'ant', label: 'Antecedente previo', desc: 'Feto anterior con Espina Bífida o Anencefalia.' },
                   { id: 'db', label: 'Diabetes Pregestacional', desc: 'Diabetes tipo 1 o 2.' },
                   { id: 'epi', label: 'Uso Anticonvulsivantes', desc: 'Especialmente Ácido Valproico.' },
                   { id: 'imc', label: 'Obesidad Severa', desc: 'IMC > 35.' }
                 ].map(f => (
-                  <div key={f.id} onClick={()=>toggle(f.id)} className={`cursor-pointer border-2 p-4 rounded-2xl flex items-center gap-4 transition-all duration-300 ${factors[f.id] ? 'border-rose-500 bg-rose-50 shadow-md transform scale-[1.02]' : 'border-slate-200 bg-slate-50 hover:bg-white'}`}>
+                  <div key={f.id} onClick={()=>toggle(f.id)} className={`cursor-pointer border-2 p-4 rounded-2xl flex items-center gap-4 transition-all duration-300 w-full break-words ${factors[f.id] ? 'border-rose-500 bg-rose-50 shadow-md transform scale-[1.02]' : 'border-slate-200 bg-slate-50 hover:bg-white'}`}>
                     <div className={`w-6 h-6 rounded-md flex items-center justify-center border-2 shrink-0 transition-colors ${factors[f.id] ? 'border-rose-600 bg-rose-600' : 'border-slate-300 bg-white'}`}>
-                      {factors[f.id] && <CheckCircle2 size={16} className="text-white" strokeWidth={3} />}
+                      {factors[f.id] && <CheckCircle2 size={16} className="text-white shrink-0" strokeWidth={3} />}
                     </div>
-                    <div className="flex-1">
-                      <p className={`font-bold text-base leading-tight mb-1 ${factors[f.id] ? 'text-rose-900' : 'text-slate-700'}`}>{f.label}</p>
-                      <p className="text-xs text-slate-500">{f.desc}</p>
+                    <div className="flex-1 min-w-0">
+                      <p className={`font-bold text-base leading-tight mb-1 text-wrap ${factors[f.id] ? 'text-rose-900' : 'text-slate-700'}`}>{f.label}</p>
+                      <p className="text-xs text-slate-500 text-pretty">{f.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className={`flex flex-col justify-center items-center text-center p-10 rounded-[2rem] border border-white/10 shadow-2xl relative overflow-hidden transition-colors duration-500 ${isHighRisk ? 'bg-gradient-to-br from-rose-900 to-slate-900' : 'bg-gradient-to-br from-emerald-900 to-slate-900'}`}>
+              <div className={`flex flex-col justify-center items-center text-center p-10 rounded-[2rem] border border-white/10 shadow-2xl relative overflow-hidden transition-colors duration-500 w-full break-words ${isHighRisk ? 'bg-gradient-to-br from-rose-900 to-slate-900' : 'bg-gradient-to-br from-emerald-900 to-slate-900'}`}>
                 <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
-                <h4 className="text-slate-400 font-bold text-xs uppercase tracking-widest mb-8 z-10">Dosis Preconcepcional</h4>
+                <h4 className="text-slate-400 font-bold text-xs uppercase tracking-widest mb-8 z-10 text-center">Dosis Preconcepcional</h4>
                 
-                <div key={isHighRisk ? 'high' : 'low'} className="animate-in zoom-in duration-500 flex flex-col items-center z-10">
+                <div key={isHighRisk ? 'high' : 'low'} className="animate-in zoom-in duration-500 flex flex-col items-center z-10 w-full text-center">
                   <div className={`text-7xl md:text-8xl font-black mb-6 drop-shadow-lg ${isHighRisk ? 'text-rose-400' : 'text-emerald-400'}`}>
                     {isHighRisk ? '4-5' : '400'} 
                     <span className="text-3xl ml-2">{isHighRisk ? 'mg' : 'mcg'}</span>
                   </div>
-                  <p className={`font-black text-sm px-6 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 ${isHighRisk ? 'text-rose-300' : 'text-emerald-300'}`}>
+                  <p className={`font-black text-sm px-6 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-wrap break-words max-w-full ${isHighRisk ? 'text-rose-300' : 'text-emerald-300'}`}>
                     {isHighRisk ? 'Dosis Alta (Terapéutica)' : 'Dosis Estándar (Profilaxis)'}
                   </p>
                 </div>
@@ -1001,6 +1002,28 @@
               ],
               correctAnswer: 1,
               explanation: "¡Correcto! La TN aumentada y ausencia de hueso nasal son marcadores ecográficos muy fuertes de cromosomopatías (como Trisomía 21). El paso a seguir es ofrecer un Test de ADN fetal en sangre materna (NIPT) como cribado de altísima sensibilidad o directamente una Biopsia de Vellosidades Coriales para confirmación diagnóstica (la amniocentesis no se realiza antes de la semana 15)."
+            },
+            {
+              question: "Se recibe a un recién nacido en la sala de partos que presenta un abdomen excavado (escafoide), dificultad respiratoria severa y ruidos hidroaéreos audibles en el hemitórax izquierdo. ¿Qué acción está absolutamente CONTRAINDICADA en el manejo inicial de este paciente?",
+              options: [
+                "Intubación endotraqueal inmediata.",
+                "Colocación de sonda orogástrica para descompresión.",
+                "Ventilación con bolsa-mascarilla (ambú).",
+                "Monitorización continua de saturación de oxígeno preductal."
+              ],
+              correctAnswer: 2,
+              explanation: "¡Correcto! La presentación clínica es clásica de una Hernia Diafragmática Congénita. La ventilación a presión positiva con bolsa-mascarilla está contraindicada porque el aire ingresa al estómago e intestinos (alojados en el tórax), distendiéndolos y comprimiendo aún más el pulmón hipoplásico. El paciente debe ser intubado inmediatamente."
+            },
+            {
+              question: "Un feto es diagnosticado con mielomeningocele lumbosacro a las 20 semanas de gestación. Los padres preguntan sobre el beneficio de la cirugía fetal intrauterina frente a esperar para operar después del nacimiento. Según la evidencia actual (Estudio MOMS), usted les explica que la cirugía fetal:",
+              options: [
+                "Cura completamente la enfermedad y garantiza una función motora normal al 100%.",
+                "Reduce significativamente la necesidad de derivación ventrículo-peritoneal para la hidrocefalia y mejora los resultados motores.",
+                "Solo tiene propósitos estéticos y no afecta el desarrollo neurológico a largo plazo del paciente.",
+                "Aumenta la tasa de mortalidad fetal severamente pero reduce el riesgo de rotura uterina."
+              ],
+              correctAnswer: 1,
+              explanation: "¡Correcto! El célebre ensayo clínico MOMS (Management of Myelomeningocele Study) demostró que la reparación prenatal, comparada con la posnatal, revierte parcialmente la malformación de Chiari II, reduciendo a la mitad la necesidad de colocar una válvula de derivación (shunt) y mejorando sustancialmente la capacidad del niño para caminar de forma independiente."
             }
           ];
 
@@ -1019,28 +1042,28 @@
           const cCase = cases[currentCase];
 
           return (
-            <div className="space-y-8 animate-in slide-in-from-bottom-8 duration-700 fade-in max-w-4xl mx-auto">
-              <div className="mb-8 text-center">
+            <div className="space-y-8 animate-in slide-in-from-bottom-8 duration-700 fade-in max-w-4xl mx-auto w-full">
+              <div className="mb-8 text-center w-full break-words">
                 <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight flex items-center justify-center gap-3">
-                  <HelpCircle className="text-indigo-600"/> Casos Clínicos
+                  <HelpCircle className="text-indigo-600 shrink-0"/> Casos Clínicos
                 </h2>
                 <p className="text-slate-500 mt-3 text-base md:text-lg font-medium">Evalúa tus conocimientos integrando ciencias básicas y clínica.</p>
               </div>
 
-              <div className="bg-white/90 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-white relative overflow-hidden">
+              <div className="bg-white/90 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-white relative overflow-hidden w-full break-words">
                 <div className="absolute top-0 left-0 w-full h-2 bg-slate-100">
                    <div className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500" style={{ width: `${((currentCase + 1) / cases.length) * 100}%` }}></div>
                 </div>
 
                 <div className="flex justify-between items-center mb-8 mt-2">
-                  <span className="text-xs font-black uppercase tracking-widest text-slate-400 bg-slate-100 px-3 py-1.5 rounded-lg">Caso {currentCase + 1} de {cases.length}</span>
+                  <span className="text-xs font-black uppercase tracking-widest text-slate-400 bg-slate-100 px-3 py-1.5 rounded-lg break-words text-center">Caso {currentCase + 1} de {cases.length}</span>
                 </div>
 
-                <p className="text-xl md:text-2xl font-bold text-slate-800 mb-10 leading-relaxed">
+                <p className="text-xl md:text-2xl font-bold text-slate-800 mb-10 leading-relaxed text-pretty">
                   {cCase.question}
                 </p>
 
-                <div className="space-y-4">
+                <div className="space-y-4 w-full">
                   {cCase.options.map((opt, idx) => {
                     let btnClass = "bg-slate-50 border-slate-200 text-slate-600 hover:bg-white hover:border-indigo-300 hover:shadow-md hover:-translate-y-0.5";
                     let Icon = <div className="w-5 h-5 rounded-full border-2 border-slate-300 shrink-0"></div>;
@@ -1062,32 +1085,32 @@
                         key={idx}
                         onClick={() => handleAnswer(idx)}
                         disabled={isAnswered}
-                        className={`w-full text-left p-5 rounded-2xl border-2 transition-all duration-300 flex items-center gap-5 ${btnClass}`}
+                        className={`w-full text-left p-5 rounded-2xl border-2 transition-all duration-300 flex items-center gap-5 break-words ${btnClass}`}
                       >
                         {Icon}
-                        <span className="text-base md:text-lg font-medium leading-snug">{opt}</span>
+                        <span className="text-base md:text-lg font-medium leading-snug text-pretty flex-1">{opt}</span>
                       </button>
                     )
                   })}
                 </div>
 
                 {isAnswered && (
-                  <div className="mt-10 animate-in slide-in-from-bottom-8 duration-500 fade-in">
-                    <div className={`p-6 md:p-8 rounded-[2rem] border-2 relative overflow-hidden ${selectedAnswer === cCase.correctAnswer ? 'bg-emerald-50 border-emerald-200' : 'bg-amber-50 border-amber-200'}`}>
+                  <div className="mt-10 animate-in slide-in-from-bottom-8 duration-500 fade-in w-full">
+                    <div className={`p-6 md:p-8 rounded-[2rem] border-2 relative overflow-hidden break-words w-full ${selectedAnswer === cCase.correctAnswer ? 'bg-emerald-50 border-emerald-200' : 'bg-amber-50 border-amber-200'}`}>
                       <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 ${selectedAnswer === cCase.correctAnswer ? 'bg-emerald-400/20' : 'bg-amber-400/20'}`}></div>
-                      <h4 className={`font-black text-sm uppercase tracking-widest mb-3 flex items-center gap-2 ${selectedAnswer === cCase.correctAnswer ? 'text-emerald-800' : 'text-amber-800'}`}>
-                        <Sparkles size={16} /> {selectedAnswer === cCase.correctAnswer ? '¡Excelente Análisis!' : 'Perla Clínica'}
+                      <h4 className={`font-black text-sm uppercase tracking-widest mb-3 flex items-center gap-2 break-words ${selectedAnswer === cCase.correctAnswer ? 'text-emerald-800' : 'text-amber-800'}`}>
+                        <Sparkles size={16} className="shrink-0" /> {selectedAnswer === cCase.correctAnswer ? '¡Excelente Análisis!' : 'Perla Clínica'}
                       </h4>
-                      <p className="text-slate-700 text-base md:text-lg leading-relaxed relative z-10">
+                      <p className="text-slate-700 text-base md:text-lg leading-relaxed relative z-10 text-pretty">
                         {cCase.explanation}
                       </p>
                     </div>
                     
                     <button 
                       onClick={nextCase}
-                      className="mt-8 w-full py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 text-lg"
+                      className="mt-8 w-full py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 text-lg break-words text-center"
                     >
-                      Siguiente Caso Clínico <ArrowRight size={20} />
+                      Siguiente Caso Clínico <ArrowRight size={20} className="shrink-0" />
                     </button>
                   </div>
                 )}
@@ -1102,7 +1125,7 @@
           return (
             <button 
               onClick={onClick}
-              className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all duration-300 font-semibold group ${
+              className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all duration-300 font-semibold group break-words text-left ${
                 active 
                   ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white shadow-lg shadow-indigo-500/25' 
                   : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-100'
@@ -1115,7 +1138,7 @@
                 <span className="truncate">{label}</span>
               </div>
               {highlight && !active && (
-                <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></div>
+                <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse shrink-0 ml-2"></div>
               )}
             </button>
           );
@@ -1123,12 +1146,12 @@
 
         function ProgressBar({ label, percent, colorClass, textClass }) {
           return (
-            <div className="relative pt-1 group">
-              <div className="flex mb-3 items-center justify-between gap-4">
-                <span className={`text-sm font-bold uppercase tracking-wider inline-block truncate ${textClass}`}>{label}</span>
-                <span className={`text-sm font-black inline-block shrink-0 px-2 py-1 rounded-md bg-slate-100 ${textClass}`}>{percent}%</span>
+            <div className="relative pt-1 group w-full break-words">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-3">
+                <span className={`text-sm font-bold uppercase tracking-wider inline-block text-wrap ${textClass}`}>{label}</span>
+                <span className={`text-sm font-black inline-block shrink-0 px-2 py-1 rounded-md bg-slate-100 self-start sm:self-auto ${textClass}`}>{percent}%</span>
               </div>
-              <div className={`overflow-hidden h-3 mb-4 text-xs flex rounded-full bg-slate-100 shadow-inner`}>
+              <div className={`overflow-hidden h-3 mb-4 text-xs flex rounded-full bg-slate-100 shadow-inner w-full`}>
                 <div style={{ width: `${percent}%` }} className={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${colorClass} transition-all duration-1000 ease-out group-hover:brightness-110`}></div>
               </div>
             </div>
@@ -1143,14 +1166,14 @@
           };
           
           return (
-            <div className={`bg-white/80 backdrop-blur-md p-6 sm:p-8 rounded-[2rem] shadow-xl shadow-slate-200/40 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl flex flex-col group border ${colorMap[color]}`}>
-              <div className="flex items-center gap-4 mb-5">
+            <div className={`bg-white/80 backdrop-blur-md p-6 sm:p-8 rounded-[2rem] shadow-xl shadow-slate-200/40 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl flex flex-col group border w-full break-words ${colorMap[color]}`}>
+              <div className="flex items-center gap-4 mb-5 w-full">
                 <div className="p-3 bg-white rounded-2xl shadow-sm border border-slate-100 group-hover:scale-110 transition-transform duration-300 shrink-0">
                   {icon}
                 </div>
-                <h3 className="font-extrabold text-lg text-slate-800 leading-tight">{title}</h3>
+                <h3 className="font-extrabold text-lg text-slate-800 leading-tight text-wrap flex-1">{title}</h3>
               </div>
-              <p className="text-slate-600 text-sm md:text-base leading-relaxed flex-1">
+              <p className="text-slate-600 text-sm md:text-base leading-relaxed flex-1 text-pretty">
                 {children}
               </p>
             </div>
@@ -1166,12 +1189,12 @@
           };
           
           return (
-            <div className="p-6 bg-slate-50/50 rounded-2xl border border-slate-100 hover:border-indigo-200 hover:bg-white transition-colors duration-300 flex flex-col group">
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4">
-                <span className="font-black text-xl text-slate-800 leading-tight group-hover:text-indigo-600 transition-colors">{term}</span>
-                <span className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full self-start shrink-0 shadow-sm ${colorStyles[color]}`}>{type}</span>
+            <div className="p-6 bg-slate-50/50 rounded-2xl border border-slate-100 hover:border-indigo-200 hover:bg-white transition-colors duration-300 flex flex-col group w-full break-words">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4 w-full">
+                <span className="font-black text-xl text-slate-800 leading-tight group-hover:text-indigo-600 transition-colors text-wrap flex-1">{term}</span>
+                <span className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full self-start shrink-0 shadow-sm text-center ${colorStyles[color]}`}>{type}</span>
               </div>
-              <p className="text-sm text-slate-600 leading-relaxed font-medium flex-1">{def}</p>
+              <p className="text-sm text-slate-600 leading-relaxed font-medium flex-1 text-pretty">{def}</p>
             </div>
           );
         }
